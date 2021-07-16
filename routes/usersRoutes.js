@@ -54,7 +54,7 @@ Router.post("/login", async (req,res)=>{
        if(checkPassword){
            let token = jwt.sign( {id:user._id, username:user.username} , "naqvi")
            res.header("code", token)
-           res.cookie("code",token)
+          /*  res.cookie("code",token, {httpOnly:false}) */
            return res.send({success:true, user:user})
        }else{
            return res.send({success:false, message:"password doesn't match"})

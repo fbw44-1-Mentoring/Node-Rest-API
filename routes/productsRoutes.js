@@ -4,7 +4,9 @@ const ProductsModal = require("../modals/ProductsModal")
 const jwt = require("jsonwebtoken")
 //get route to get all products
 Router.get("/", async (req,res,next)=>{
-            try{
+    const products= await ProductsModal.find({})
+    res.send({success:true, products:products})
+           /*  try{
                 let code = req.header("code")
                 
                 let decodedToken= jwt.verify(code, "naqvi")
@@ -19,7 +21,7 @@ Router.get("/", async (req,res,next)=>{
             }
             catch(err){
                 console.log(err.message)
-            }
+            } */
     })
 
 //post route to add new product into DB

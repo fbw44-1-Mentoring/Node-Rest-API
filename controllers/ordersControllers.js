@@ -1,13 +1,22 @@
 
 const OrdersModal = require("../modals/OrdersModal")
 const ProductsModal = require("../modals/ProductsModal")
-
+const jwt = require("jsonwebtoken")
 exports.getAllOrders= async (req,res,next)=>{
     try{
-        const orders= await OrdersModal.find({})
-        res.send({success:true, orders:orders})
+        let token = req.header("code")
+        let decodedToken= jwt.verify(token, "naqvi")
+        if(!decodedToken){
+            return res.status(403).send({success:false, message:"invalid token"})
+        }else{
+            console.log(decodedToken)
+            const orders= await OrdersModal.find({userId:decodedToken.id}).populate("userId").populate("products")
+            res.send({success:true, orders:orders})
+        }
+       
     }
     catch(err){
+        res.send({success:false, message:err.message})
         console.log(err.message)
     }
 }

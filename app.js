@@ -4,10 +4,13 @@ const ProductsRoutes= require("./routes/productsRoutes")
 const OrdersRoutes= require("./routes/ordersRoutes")
 const app = express()
 const PORT = process.env.PORT || 4000;
-
+const cors = require("cors")
 //Middlewares
 app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
+//use cors middleware
+app.use(cors({origin:"http://localhost:3000",exposedHeaders:"code"}))
 
 //mongoose Connection
 const mongoose= require("mongoose")
